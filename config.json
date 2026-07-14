@@ -1,5 +1,43 @@
-state/
-!state/.gitkeep
-__pycache__/
-*.pyc
-.env
+{
+  "_leia_me": "Edite este arquivo para evoluir a newsletter. Feeds com 'ativo': false sao ignorados. Marque 'filtrar': true para feeds gerais (que devem passar pelo filtro de palavras-chave) e false para feeds ja especificos de IA. IMPORTANTE: valide cada URL de RSS antes de ativar — feeds de blogs institucionais mudam com frequencia. O script registra no log quais feeds falharam ao carregar.",
+
+  "modelo": "claude-haiku-4-5-20251001",
+  "modelo_alternativo_maior_qualidade": "claude-sonnet-5",
+  "janela_dias": 3,
+  "max_candidatos": 50,
+  "max_itens_edicao": 15,
+  "relevancia_minima": 2,
+  "titulo_newsletter": "Radar de IA",
+  "idioma_resumo": "português do Brasil",
+
+  "palavras_chave": [
+    "ia", "inteligência artificial", "artificial intelligence", "machine learning",
+    "aprendizado de máquina", "llm", "modelo de linguagem", "language model",
+    "gpt", "claude", "gemini", "llama", "mistral", "openai", "anthropic",
+    "deepmind", "hugging face", "deep learning", "rede neural", "neural network",
+    "generative", "generativa", "transformer", "copilot", "agente de ia",
+    "ai agent", "rag", "fine-tuning", "diffusion", "multimodal"
+  ],
+
+  "categorias_ordem": ["Lançamento", "Tendência", "Pesquisa", "Tutorial", "Curso", "Outro"],
+
+  "feeds": [
+    {"fonte": "TechCrunch (IA)", "url": "https://techcrunch.com/tag/artificial-intelligence/feed/", "categoria_dica": "Lançamento", "filtrar": false, "ativo": true},
+    {"fonte": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "categoria_dica": "Tendência", "filtrar": true, "ativo": true},
+    {"fonte": "Ars Technica", "url": "https://feeds.arstechnica.com/arstechnica/index", "categoria_dica": "Tendência", "filtrar": true, "ativo": true},
+    {"fonte": "VentureBeat (IA)", "url": "https://venturebeat.com/category/ai/feed/", "categoria_dica": "Lançamento", "filtrar": false, "ativo": true},
+    {"fonte": "Wired", "url": "https://www.wired.com/feed/rss", "categoria_dica": "Tendência", "filtrar": true, "ativo": true},
+    {"fonte": "MIT Technology Review", "url": "https://www.technologyreview.com/feed/", "categoria_dica": "Tendência", "filtrar": true, "ativo": true},
+    {"fonte": "arXiv cs.AI", "url": "http://export.arxiv.org/rss/cs.AI", "categoria_dica": "Pesquisa", "filtrar": false, "ativo": true},
+    {"fonte": "arXiv cs.CL", "url": "http://export.arxiv.org/rss/cs.CL", "categoria_dica": "Pesquisa", "filtrar": false, "ativo": true},
+    {"fonte": "arXiv cs.LG", "url": "http://export.arxiv.org/rss/cs.LG", "categoria_dica": "Pesquisa", "filtrar": false, "ativo": false},
+
+    {"fonte": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "categoria_dica": "Tutorial", "filtrar": false, "ativo": false, "_nota": "verificar URL do feed antes de ativar"},
+    {"fonte": "OpenAI News", "url": "https://openai.com/blog/rss.xml", "categoria_dica": "Lançamento", "filtrar": false, "ativo": false, "_nota": "verificar URL do feed antes de ativar"},
+    {"fonte": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml", "categoria_dica": "Pesquisa", "filtrar": false, "ativo": false, "_nota": "verificar URL do feed antes de ativar"},
+    {"fonte": "Anthropic News", "url": "https://www.anthropic.com/news/rss.xml", "categoria_dica": "Lançamento", "filtrar": false, "ativo": false, "_nota": "verificar URL do feed antes de ativar"},
+
+    {"fonte": "Olhar Digital", "url": "https://olhardigital.com.br/feed/", "categoria_dica": "Tendência", "filtrar": true, "ativo": false, "_nota": "fonte PT-BR, verificar URL"},
+    {"fonte": "Tecnoblog", "url": "https://tecnoblog.net/feed/", "categoria_dica": "Tendência", "filtrar": true, "ativo": false, "_nota": "fonte PT-BR, verificar URL"}
+  ]
+}
