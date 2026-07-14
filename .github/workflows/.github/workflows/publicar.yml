@@ -1,0 +1,35 @@
+name: Radar de IA — Publicar edição
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Enviar edição para a lista
+        env:
+          MODO: publicar
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: python newsletter.py
+      - name: Arquivar edição publicada
+        run: |
+          git config user.name "radar-ia-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add archive
+          git commit -m "edicao publicada ${{ github.run_id }}" || echo "sem mudancas"
+          git push
