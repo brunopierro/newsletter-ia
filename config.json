@@ -1,43 +1,68 @@
 {
-  "_leia_me": "Edite este arquivo para evoluir a newsletter. Feeds com 'ativo': false sao ignorados. Marque 'filtrar': true para feeds gerais (que devem passar pelo filtro de palavras-chave) e false para feeds ja especificos de IA. IMPORTANTE: valide cada URL de RSS antes de ativar — feeds de blogs institucionais mudam com frequencia. O script registra no log quais feeds falharam ao carregar.",
+  "_leia_me": "Controla a newsletter SEMANAL. Edite AQUI as fontes, perguntas e regras de cada secao, sem tocar no codigo. Para mudar a VOZ/TOM em profundidade, veja montar_prompt() no newsletter.py. Para reescrever uma secao com suas proprias palavras, use os arquivos editorial/<id>.md (ver README).",
 
-  "modelo": "claude-haiku-4-5-20251001",
-  "modelo_alternativo_maior_qualidade": "claude-sonnet-5",
-  "janela_dias": 3,
-  "max_candidatos": 50,
-  "max_itens_edicao": 15,
-  "relevancia_minima": 2,
-  "titulo_newsletter": "Radar de IA",
-  "idioma_resumo": "português do Brasil",
+  "modelo": "claude-sonnet-5",
+  "modelo_economico": "claude-haiku-4-5-20251001",
+  "idioma": "português do Brasil",
+  "janela_dias": 8,
+  "editor_nome": "",
+  "titulo": "Radar de IA",
 
-  "palavras_chave": [
-    "ia", "inteligência artificial", "artificial intelligence", "machine learning",
-    "aprendizado de máquina", "llm", "modelo de linguagem", "language model",
-    "gpt", "claude", "gemini", "llama", "mistral", "openai", "anthropic",
-    "deepmind", "hugging face", "deep learning", "rede neural", "neural network",
-    "generative", "generativa", "transformer", "copilot", "agente de ia",
-    "ai agent", "rag", "fine-tuning", "diffusion", "multimodal"
+  "feeds_lancamentos": [
+    {"fonte": "TechCrunch (IA)", "url": "https://techcrunch.com/tag/artificial-intelligence/feed/", "ativo": true},
+    {"fonte": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "ativo": true, "filtrar": true},
+    {"fonte": "VentureBeat (IA)", "url": "https://venturebeat.com/category/ai/feed/", "ativo": true},
+    {"fonte": "MIT Technology Review", "url": "https://www.technologyreview.com/feed/", "ativo": true, "filtrar": true},
+    {"fonte": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "ativo": false, "_nota": "verificar URL"},
+    {"fonte": "OpenAI News", "url": "https://openai.com/blog/rss.xml", "ativo": false, "_nota": "verificar URL"},
+    {"fonte": "Anthropic News", "url": "https://www.anthropic.com/news/rss.xml", "ativo": false, "_nota": "verificar URL"}
   ],
+  "palavras_chave": ["ia", "inteligência artificial", "artificial intelligence", "machine learning", "llm", "gpt", "claude", "gemini", "openai", "anthropic", "deepmind", "modelo de linguagem", "generative", "agente", "ai agent"],
 
-  "categorias_ordem": ["Lançamento", "Tendência", "Pesquisa", "Tutorial", "Curso", "Outro"],
-
-  "feeds": [
-    {"fonte": "TechCrunch (IA)", "url": "https://techcrunch.com/tag/artificial-intelligence/feed/", "categoria_dica": "Lançamento", "filtrar": false, "ativo": true},
-    {"fonte": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "categoria_dica": "Tendência", "filtrar": true, "ativo": true},
-    {"fonte": "Ars Technica", "url": "https://feeds.arstechnica.com/arstechnica/index", "categoria_dica": "Tendência", "filtrar": true, "ativo": true},
-    {"fonte": "VentureBeat (IA)", "url": "https://venturebeat.com/category/ai/feed/", "categoria_dica": "Lançamento", "filtrar": false, "ativo": true},
-    {"fonte": "Wired", "url": "https://www.wired.com/feed/rss", "categoria_dica": "Tendência", "filtrar": true, "ativo": true},
-    {"fonte": "MIT Technology Review", "url": "https://www.technologyreview.com/feed/", "categoria_dica": "Tendência", "filtrar": true, "ativo": true},
-    {"fonte": "arXiv cs.AI", "url": "http://export.arxiv.org/rss/cs.AI", "categoria_dica": "Pesquisa", "filtrar": false, "ativo": true},
-    {"fonte": "arXiv cs.CL", "url": "http://export.arxiv.org/rss/cs.CL", "categoria_dica": "Pesquisa", "filtrar": false, "ativo": true},
-    {"fonte": "arXiv cs.LG", "url": "http://export.arxiv.org/rss/cs.LG", "categoria_dica": "Pesquisa", "filtrar": false, "ativo": false},
-
-    {"fonte": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "categoria_dica": "Tutorial", "filtrar": false, "ativo": false, "_nota": "verificar URL do feed antes de ativar"},
-    {"fonte": "OpenAI News", "url": "https://openai.com/blog/rss.xml", "categoria_dica": "Lançamento", "filtrar": false, "ativo": false, "_nota": "verificar URL do feed antes de ativar"},
-    {"fonte": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml", "categoria_dica": "Pesquisa", "filtrar": false, "ativo": false, "_nota": "verificar URL do feed antes de ativar"},
-    {"fonte": "Anthropic News", "url": "https://www.anthropic.com/news/rss.xml", "categoria_dica": "Lançamento", "filtrar": false, "ativo": false, "_nota": "verificar URL do feed antes de ativar"},
-
-    {"fonte": "Olhar Digital", "url": "https://olhardigital.com.br/feed/", "categoria_dica": "Tendência", "filtrar": true, "ativo": false, "_nota": "fonte PT-BR, verificar URL"},
-    {"fonte": "Tecnoblog", "url": "https://tecnoblog.net/feed/", "categoria_dica": "Tendência", "filtrar": true, "ativo": false, "_nota": "fonte PT-BR, verificar URL"}
+  "secoes": [
+    {
+      "id": "tendencias", "nome": "Tendências", "emoji": "🔭", "revisar": false, "formato": "analise", "max_itens": 1,
+      "pergunta": "O que está mudando estruturalmente na tecnologia de IA?",
+      "abordagem": "Novos sistemas estão sendo desenvolvidos para executar fluxos de trabalho mais longos, usar ferramentas e operar de maneira mais autônoma. Mais importante que um produto específico é observar se esse modo de interação está se tornando dominante. Foque na mudança estrutural, não no lançamento pontual.",
+      "fontes": ["Stanford HAI AI Index", "Epoch AI", "OECD.AI", "AI Now Institute", "Ada Lovelace Institute", "Reuters", "MIT Technology Review", "The Batch (DeepLearning.AI)", "The Information"]
+    },
+    {
+      "id": "mercado", "nome": "Mercado de IA", "emoji": "📈", "revisar": false, "formato": "movimentos", "max_itens": 4,
+      "pergunta": "Para onde estão indo o dinheiro, as empresas e os negócios?",
+      "abordagem": "Mostrar como a IA está virando atividade econômica: investimentos, aquisições, receita, movimentos estratégicos. Priorize dados concretos (valores, números) com fonte.",
+      "fontes": ["Reuters", "Bloomberg", "Financial Times", "The Information", "CNBC", "Stanford AI Index (economia e investimento)", "relatórios financeiros e cartas a investidores das empresas"]
+    },
+    {
+      "id": "usabilidade", "nome": "Usabilidade", "emoji": "🛠", "revisar": true, "formato": "leads", "max_itens": 3,
+      "pergunta": "Que usos concretos e úteis de IA valem um teste?",
+      "abordagem": "Estrutura problema → método → resultado (ex.: 'É possível usar IA para analisar uma reunião de duas horas?'). IMPORTANTE: você NÃO testa nada. Traga métodos e casos RELATADOS por fontes citáveis, sempre marcados como pistas a testar.",
+      "fontes": ["documentação e release notes de produtos", "guias das próprias empresas", "Ethan Mollick / One Useful Thing", "Simon Willison", "comunidades especializadas"]
+    },
+    {
+      "id": "lancamentos", "nome": "Lançamentos e Novidades", "emoji": "⚡", "revisar": false, "formato": "notas", "max_itens": 8, "usa_rss": true,
+      "pergunta": "O que foi lançado ou atualizado?",
+      "abordagem": "Seção mais rápida: notas curtas. Novos modelos, recursos, ferramentas, integrações, aberturas de acesso, novas modalidades. REGRA: separar o que a empresa afirma do que foi demonstrado de forma independente. Benchmarks do próprio fabricante NÃO são prova de superioridade — rotule como afirmação do fabricante.",
+      "fontes": ["OpenAI News", "Anthropic Newsroom", "Google DeepMind", "Google AI", "Microsoft", "Meta AI", "NVIDIA", "Hugging Face", "GitHub", "Reuters", "The Verge", "TechCrunch", "The Information", "The Batch"]
+    },
+    {
+      "id": "para_ler", "nome": "Para Ler com Calma", "emoji": "📚", "revisar": true, "formato": "leituras", "max_itens": 3,
+      "pergunta": "Que leituras longas realmente valem o tempo?",
+      "abordagem": "Contraponto à velocidade do resto: grandes reportagens, ensaios, artigos científicos, relatórios, entrevistas, análises extensas. De 1 a 3 por edição. Para cada uma: por que selecionamos, a grande questão do texto, tempo estimado de leitura e nível (introdutório, intermediário, especializado).",
+      "fontes": ["Nature", "Science", "PNAS", "Stanford HAI", "Epoch AI", "AI Now Institute", "Ada Lovelace Institute", "MIT Technology Review", "The Atlantic", "Financial Times", "The Economist", "The New York Times", "The Guardian", "Reuters", "The Information", "ScienceArena.org", "Folha", "Estadão", "Valor", "Época Negócios", "Exame", "revista piauí", "Nexo Jornal", "O Globo"]
+    },
+    {
+      "id": "cursos", "nome": "Cursos", "emoji": "🎓", "revisar": true, "formato": "cursos", "max_itens": 6,
+      "pergunta": "Este curso realmente vale o meu tempo?",
+      "abordagem": "Não é divulgar curso, é ajudar a decidir. Para cada curso: instituição, o que se aprende, preço (pago/gratuito) e por que vale a pena. Organize em trilhas.",
+      "trilhas": ["Quero começar a usar IA (iniciantes)", "Quero usar IA no meu trabalho (produtividade e aplicações)", "Quero construir com IA (programação, APIs e agentes)", "Quero entender IA profundamente (machine learning, modelos e matemática)"],
+      "fontes": ["DeepLearning.AI", "OpenAI Academy", "Hugging Face Learn", "Coursera", "edX", "NVIDIA Deep Learning Institute", "Google", "Microsoft Learn", "AWS", "instituições brasileiras"]
+    },
+    {
+      "id": "livros", "nome": "Livros", "emoji": "📖", "revisar": true, "formato": "livros", "max_itens": 4,
+      "pergunta": "Que livro vale a formação de longo prazo?",
+      "abordagem": "Conhecimento de ciclo lento. Pode incluir lançamentos e clássicos que voltaram a ser relevantes. Para cada livro: autor(es), por que ler agora e um resumo em até 5 linhas. Organize por categoria.",
+      "categorias": ["Como a IA funciona", "Como usar IA", "IA, trabalho e economia", "IA, política, ética e sociedade"],
+      "fontes": ["MIT Press", "Princeton University Press", "Oxford University Press", "Cambridge University Press", "Harvard University Press", "Yale University Press", "O'Reilly", "Manning", "No Starch Press", "editoras brasileiras", "resenhas em Nature e Science"]
+    }
   ]
 }
